@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Gravity Control Panel | Reality Manipulation Interface</title>
+    <meta name="description"
+        content="Advanced quantum gravity manipulation interface with real-time parameter control and visual effects">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="quantum-background">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">⚛️</span>
+                <h1>Quantum Gravity Control Panel</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text">System Ready</span>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Control Panel -->
+            <aside class="control-panel">
+                <h2 class="panel-title">
+                    <span class="icon">⚙️</span>
+                    Parameters
+                </h2>
+
+                <!-- Quantum Terms Control -->
+                <div class="control-group">
+                    <label for="quantum-probability">
+                        <span class="label-text">Quantum Probability</span>
+                        <span class="label-value" id="probability-value">30%</span>
+                    </label>
+                    <input type="range" id="quantum-probability" min="0" max="100" value="30" class="slider">
+                    <p class="control-hint">Chance of text transformation</p>
+                </div>
+
+                <div class="control-group">
+                    <label for="animation-speed">
+                        <span class="label-text">Animation Speed</span>
+                        <span class="label-value" id="speed-value">2.0s</span>
+                    </label>
+                    <input type="range" id="animation-speed" min="0.5" max="5" step="0.1" value="2" class="slider">
+                    <p class="control-hint">Duration of gravity effect</p>
+                </div>
+
+                <div class="control-group">
+                    <label for="rotation-intensity">
+                        <span class="label-text">Rotation Intensity</span>
+                        <span class="label-value" id="rotation-value">10°</span>
+                    </label>
+                    <input type="range" id="rotation-intensity" min="0" max="360" value="10" class="slider">
+                    <p class="control-hint">Initial body rotation angle</p>
+                </div>
+
+                <div class="control-group">
+                    <label for="scale-factor">
+                        <span class="label-text">Scale Factor</span>
+                        <span class="label-value" id="scale-value">0.90</span>
+                    </label>
+                    <input type="range" id="scale-factor" min="0.5" max="1.5" step="0.01" value="0.9" class="slider">
+                    <p class="control-hint">Initial body scale</p>
+                </div>
+
+                <div class="control-group">
+                    <label for="delay-time">
+                        <span class="label-text">Activation Delay</span>
+                        <span class="label-value" id="delay-value">1.0s</span>
+                    </label>
+                    <input type="range" id="delay-time" min="0" max="5" step="0.1" value="1" class="slider">
+                    <p class="control-hint">Time before gravity activates</p>
+                </div>
+
+                <!-- Time Dilation Control -->
+                <div class="control-group">
+                    <label for="time-dilation">
+                        <span class="label-text">⏱️ Time Dilation</span>
+                        <span class="label-value" id="time-dilation-value">1.0x</span>
+                    </label>
+                    <input type="range" id="time-dilation" min="0.5" max="5" step="0.1" value="1" class="slider">
+                    <p class="control-hint">Slow motion effect (0.5x to 5x speed)</p>
+                </div>
+
+                <!-- Antigravity Toggle -->
+                <div class="control-group">
+                    <label class="toggle-label">
+                        <span class="label-text">🔼 Antigravity Mode</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="antigravity-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                    <p class="control-hint">Invert gravity (elements float up)</p>
+                </div>
+
+                <!-- Dispersal Button -->
+                <div class="control-group">
+                    <button id="dispersal-btn" class="btn btn-warning">
+                        <span class="btn-icon">💥</span>
+                        Activate Dispersal
+                    </button>
+                    <p class="control-hint">Apply explosive radial force</p>
+                </div>
+
+                <!-- Quantum Terms Selector -->
+                <div class="control-group">
+                    <label class="label-text">Active Quantum Terms</label>
+                    <div class="term-chips">
+                        <button class="chip active" data-term="Superposition">Superposition</button>
+                        <button class="chip active" data-term="Entanglement">Entanglement</button>
+                        <button class="chip active" data-term="Ψ Wave Function">Ψ Wave</button>
+                        <button class="chip active" data-term="Tunneling">Tunneling</button>
+                        <button class="chip active" data-term="Planck">Planck</button>
+                        <button class="chip active" data-term="Heisenberg">Heisenberg</button>
+                        <button class="chip active" data-term="Qubit">Qubit</button>
+                        <button class="chip active" data-term="Schrödinger">Schrödinger</button>
+                        <button class="chip active" data-term="Decoherence">Decoherence</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="activate-btn" class="btn btn-primary">
+                        <span class="btn-icon">🚀</span>
+                        Activate Quantum Gravity
+                    </button>
+                    <button id="reset-btn" class="btn btn-secondary">
+                        <span class="btn-icon">🔄</span>
+                        Reset Reality
+                    </button>
+                    <button id="export-btn" class="btn btn-tertiary">
+                        <span class="btn-icon">📋</span>
+                        Export Code
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Demo Area -->
+            <main class="demo-area">
+                <div class="demo-header">
+                    <h2>Live Demo Environment</h2>
+                    <div class="demo-controls">
+                        <button id="populate-btn" class="btn-small">Populate Content</button>
+                    </div>
+                </div>
+
+                <div id="demo-content" class="demo-content">
+                    <h1>Welcome to the Quantum Realm</h1>
+                    <p>This is a demonstration environment where you can test the quantum gravity effects in real-time.
+                    </p>
+
+                    <div class="demo-card">
+                        <h2>Quantum Mechanics</h2>
+                        <p>The study of matter and energy at the molecular, atomic, nuclear, and even smaller
+                            microscopic levels.</p>
+                        <button>Learn More</button>
+                    </div>
+
+                    <div class="demo-card">
+                        <h2>General Relativity</h2>
+                        <p>Einstein's theory of gravitation describing gravity as a geometric property of space and
+                            time.</p>
+                        <button>Explore Theory</button>
+                    </div>
+
+                    <div class="demo-card">
+                        <h2>String Theory</h2>
+                        <p>A theoretical framework in which point-like particles are replaced by one-dimensional
+                            strings.</p>
+                        <button>Dive Deeper</button>
+                    </div>
+
+                    <div class="demo-links">
+                        <a href="#physics">Physics</a>
+                        <a href="#mathematics">Mathematics</a>
+                        <a href="#cosmology">Cosmology</a>
+                        <a href="#particles">Particle Physics</a>
+                    </div>
+
+                    <span class="demo-label">Quantum State: Active</span>
+                    <span class="demo-label">Gravity: Normal</span>
+                    <span class="demo-label">Reality: Stable</span>
+                </div>
+            </main>
+
+            <!-- Quantum Mechanics Visualization -->
+            <aside class="quantum-viz-panel">
+                <h2 class="panel-title">
+                    <span class="icon">⚛️</span>
+                    Quantum Simulations
+                </h2>
+
+                <canvas id="quantum-canvas" width="600" height="400"></canvas>
+
+                <div class="viz-controls">
+                    <button class="viz-btn active" data-viz="doubleSlit">
+                        <span class="viz-icon">〰️</span>
+                        Double Slit
+                    </button>
+                    <button class="viz-btn" data-viz="particleBox">
+                        <span class="viz-icon">📦</span>
+                        Particle Box
+                    </button>
+                    <button class="viz-btn" data-viz="blochSphere">
+                        <span class="viz-icon">🌐</span>
+                        Bloch Sphere
+                    </button>
+                    <button class="viz-btn" data-viz="tunneling">
+                        <span class="viz-icon">🌊</span>
+                        Tunneling
+                    </button>
+                </div>
+
+                <div class="viz-info">
+                    <p class="viz-description">
+                        Visualizations merged from <strong>quantum-mechanics-core</strong> repository.
+                        Explore fundamental quantum phenomena in real-time.
+                    </p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Code Export Modal -->
+        <div id="export-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Export Quantum Gravity Code</h3>
+                    <button id="close-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-description">Copy this code and paste it into your browser console on any webpage:
+                    </p>
+                    <pre id="export-code" class="code-block"></pre>
+                    <button id="copy-code-btn" class="btn btn-primary">
+                        <span class="btn-icon">📋</span>
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matter.js Physics Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <!-- Quantum Mechanics Visualizations -->
+    <script src="quantum-visualizations.js"></script>
+
+    <!-- Gravity Hack Physics Engine -->
+    <script src="gravity_hack.js"></script>
+
+    <!-- Main Control Panel Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
