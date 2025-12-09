@@ -1,9 +1,9 @@
-# Quantum Gravity Control Panel (Gauss-Motus)
+# Gauss-Motus Clean Energy
 
-**Project Title:** Quantum Gravity Control Panel | Reality Manipulation Interface
+**Project Title:** Gauss-Motus Clean Energy | Reality Manipulation Interface
 
 ## Description
-Gauss-Motus is a "Quantum Gravity Control Panel" – an advanced, interactive web interface designed to simulate and manipulate "quantum gravity" effects on HTML elements. It leverages a physics engine to apply dynamic forces to the DOM, allowing users to experience and experiment with concepts like gravity, time dilation, and quantum phenomena in a web environment.
+Gauss-Motus Clean Energy is an advanced, interactive web interface designed to simulate and manipulate "quantum gravity" effects on HTML elements. It leverages a physics engine to apply dynamic forces to the DOM, allowing users to experience and experiment with concepts like gravity, time dilation, and quantum phenomena in a web environment.
 
 The interface serves as a "Reality Manipulation Interface," offering a playful and educational way to visualize complex physics concepts through direct interaction with web page elements.
 
@@ -12,8 +12,7 @@ The interface serves as a "Reality Manipulation Interface," offering a playful a
 *   **CSS:** Styling for the interface (referenced as `styles.css`).
 *   **JavaScript:** Core logic for interaction and simulations (referenced as `script.js`, `gravity_hack.js`, `quantum-visualizations.js`).
 *   **Matter.js:** A 2D physics engine for the web (loaded via CDN), enabling the gravity and collision effects.
-*   **git-crypt:** Used for transparent encryption and decryption of files in the repository.
-*   **Jupyter Notebooks:** Python-based notebooks (present in the repository structure).
+*   **Python (pytest):** Used for automated testing of the HTML structure.
 
 ## Features
 
@@ -47,8 +46,47 @@ A "Live Demo Environment" is provided to test the effects immediately. It includ
 *   **Export Code:** A feature to export the underlying "Quantum Gravity Code," allowing users to copy and paste the effect script into the browser console of other websites to apply the effects universally.
 
 ## Setup/Usage
-1.  **View the Interface:** Open `index.html` in a modern web browser.
-2.  **Interact:** Use the sliders and buttons in the left-hand control panel to adjust parameters. Click "Activate Quantum Gravity" to see the effects on the demo content.
-3.  **Simulations:** Use the buttons on the right-hand panel to switch between different quantum visualizations on the canvas.
 
-*Note: The functionality relies on `script.js`, `gravity_hack.js`, `quantum-visualizations.js`, and `styles.css` being present in the same directory.*
+### Prerequisites
+*   A modern web browser (Chrome, Firefox, Safari, Edge).
+*   Python 3.x (for running tests).
+*   `pytest` and `beautifulsoup4` python packages.
+
+### Installation
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/gauss-motus-clean-energy.git
+    cd gauss-motus-clean-energy
+    ```
+2.  Install python dependencies (optional, for development):
+    ```bash
+    pip install pytest beautifulsoup4
+    ```
+
+### Running the Application
+1.  Open `index.html` in your web browser.
+2.  Interact with the sliders and buttons in the left-hand control panel.
+3.  Click "Activate Quantum Gravity" to see the effects on the demo content.
+4.  Use the right-hand panel buttons to switch between quantum visualizations.
+
+### Running Tests
+To ensure the integrity of the project structure, you can run the included test suite:
+
+```bash
+pytest
+```
+
+This will verify:
+*   Page title and meta descriptions.
+*   Existence of critical UI controls.
+*   Proper linking of external resources (CSS, JS).
+*   Validity of HTML structure (e.g., no nested labels).
+
+## Development
+*   **`index.html`**: The main structure of the page.
+*   **`styles.css`**: Contains all styling rules.
+*   **`script.js`**: Main entry point for application logic.
+*   **`gravity_hack.js`**: Contains Matter.js physics implementation.
+*   **`quantum-visualizations.js`**: Contains Canvas rendering code.
+
+Please ensure all new functions and classes are fully documented with JSDoc (for JavaScript) or Google Style Docstrings (for Python).
