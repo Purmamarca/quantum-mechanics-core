@@ -20,6 +20,115 @@ const state = {
 };
 
 // ===================================
+// Performance Metrics & Analytics
+// ===================================
+const metrics = {
+    sessionStart: Date.now(),
+    calculationCount: 0,
+    totalCalculationTime: 0,
+    sliderInteractions: 0,
+    resetCount: 0,
+    lastCalculationTime: 0,
+
+    /**
+     * Records a calculation event
+     * @param {number} duration - Time taken for calculation in ms
+     */
+    recordCalculation(duration) {
+        this.calculationCount++;
+        this.totalCalculationTime += duration;
+        this.lastCalculationTime = duration;
+
+        // Log metrics for analytics (can be sent to analytics service)
+        this.logEvent('calculation_performed', {
+            duration_ms: duration,
+            system_size: state.systemSize,
+            sun_hours: state.sunHours,
+            efficiency: state.panelEfficiency,
+            energy_cost: state.energyCost,
+            system_cost: state.systemCost
+        });
+    },
+
+    /**
+     * Records a slider interaction
+     * @param {string} sliderId - ID of the slider that was changed
+     */
+    recordSliderInteraction(sliderId) {
+        this.sliderInteractions++;
+        this.logEvent('slider_interaction', { slider: sliderId });
+    },
+
+    /**
+     * Records a reset event
+     */
+    recordReset() {
+        this.resetCount++;
+        this.logEvent('form_reset', {});
+    },
+
+    /**
+     * Gets session duration in seconds
+     * @returns {number} Session duration
+     */
+    getSessionDuration() {
+        return Math.floor((Date.now() - this.sessionStart) / 1000);
+    },
+
+    /**
+     * Gets average calculation time
+     * @returns {number} Average time in ms
+     */
+    getAverageCalculationTime() {
+        return this.calculationCount > 0
+            ? this.totalCalculationTime / this.calculationCount
+            : 0;
+    },
+
+    /**
+     * Logs an event (can be extended to send to analytics service)
+     * @param {string} eventName - Name of the event
+     * @param {Object} eventData - Event data
+     */
+    logEvent(eventName, eventData) {
+        // Console logging for development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log(`[Analytics] ${eventName}:`, eventData);
+        }
+
+        // This is where you would send to Google Analytics, Mixpanel, etc.
+        // Example: gtag('event', eventName, eventData);
+        // Example: mixpanel.track(eventName, eventData);
+    },
+
+    /**
+     * Gets comprehensive metrics summary
+     * @returns {Object} Metrics summary
+     */
+    getSummary() {
+        return {
+            session_duration_seconds: this.getSessionDuration(),
+            calculation_count: this.calculationCount,
+            average_calculation_time_ms: this.getAverageCalculationTime(),
+            slider_interactions: this.sliderInteractions,
+            reset_count: this.resetCount,
+            engagement_score: this.calculateEngagementScore()
+        };
+    },
+
+    /**
+     * Calculates user engagement score (0-100)
+     * @returns {number} Engagement score
+     */
+    calculateEngagementScore() {
+        const sessionMinutes = this.getSessionDuration() / 60;
+        const interactionRate = (this.sliderInteractions + this.calculationCount) / Math.max(sessionMinutes, 1);
+        const score = Math.min(100, Math.floor(interactionRate * 10 + this.calculationCount * 5));
+        return score;
+    }
+};
+
+// ===================================
 // DOM Elements
 // ===================================
 const elements = {
@@ -29,25 +138,25 @@ const elements = {
     panelEfficiency: document.getElementById('panel-efficiency'),
     energyCost: document.getElementById('energy-cost'),
     systemCost: document.getElementById('system-cost'),
-    
+
     // Value displays
     systemSizeValue: document.getElementById('system-size-value'),
     sunHoursValue: document.getElementById('sun-hours-value'),
     panelEfficiencyValue: document.getElementById('panel-efficiency-value'),
     energyCostValue: document.getElementById('energy-cost-value'),
     systemCostValue: document.getElementById('system-cost-value'),
-    
+
     // Form and buttons
     form: document.getElementById('solar-calculator-form'),
     calculateBtn: document.getElementById('calculate-btn'),
     resetBtn: document.getElementById('reset-btn'),
-    
+
     // Results sections
     welcomeMessage: document.getElementById('welcome-message'),
     resultsCards: document.getElementById('results-cards'),
     detailedBreakdown: document.getElementById('detailed-breakdown'),
     statusBadge: document.getElementById('status-badge'),
-    
+
     // Result values
     annualEnergy: document.getElementById('annual-energy'),
     dailyEnergy: document.getElementById('daily-energy'),
@@ -60,7 +169,7 @@ const elements = {
     treesPlanted: document.getElementById('trees-planted'),
     roiPercentage: document.getElementById('roi-percentage'),
     annualRoi: document.getElementById('annual-roi'),
-    
+
     // Breakdown values
     breakdownCapacity: document.getElementById('breakdown-capacity'),
     breakdownDaily: document.getElementById('breakdown-daily'),
@@ -152,12 +261,12 @@ function calculatePaybackPeriod(systemCost, annualSavings) {
 function calculateLifetimeSavings(annualSavings) {
     let totalSavings = 0;
     const degradationRate = 0.005; // 0.5% per year
-    
+
     for (let year = 0; year < 25; year++) {
         const yearSavings = annualSavings * Math.pow(1 - degradationRate, year);
         totalSavings += yearSavings;
     }
-    
+
     return totalSavings;
 }
 
@@ -211,24 +320,24 @@ function performCalculations() {
         state.sunHours,
         state.panelEfficiency
     );
-    
+
     const dailyEnergy = annualEnergy / 365;
     const monthlyEnergy = annualEnergy / 12;
-    
+
     const annualSavings = calculateAnnualSavings(annualEnergy, state.energyCost);
     const monthlySavings = annualSavings / 12;
-    
+
     const paybackPeriod = calculatePaybackPeriod(state.systemCost, annualSavings);
-    
+
     const lifetimeSavings = calculateLifetimeSavings(annualSavings);
     const netProfit = lifetimeSavings - state.systemCost;
-    
+
     const co2Reduction = calculateCO2Reduction(annualEnergy);
     const treesPlanted = calculateTreesEquivalent(co2Reduction);
-    
+
     const roiPercentage = calculateROI(lifetimeSavings, state.systemCost);
     const annualRoi = roiPercentage / 25;
-    
+
     return {
         annualEnergy,
         dailyEnergy,
@@ -269,21 +378,21 @@ function updateResultsDisplay(results) {
     // Update result cards
     elements.annualEnergy.textContent = formatNumber(results.annualEnergy, 0);
     elements.dailyEnergy.textContent = formatNumber(results.dailyEnergy, 1);
-    
+
     elements.annualSavings.textContent = formatCurrency(results.annualSavings);
     elements.monthlySavings.textContent = formatCurrency(results.monthlySavings);
-    
+
     elements.paybackPeriod.textContent = results.paybackPeriod.toFixed(1);
-    
+
     elements.lifetimeSavings.textContent = formatCurrency(results.lifetimeSavings);
     elements.netProfit.textContent = formatCurrency(results.netProfit);
-    
+
     elements.co2Reduction.textContent = formatNumber(results.co2Reduction, 2);
     elements.treesPlanted.textContent = formatNumber(results.treesPlanted, 0);
-    
+
     elements.roiPercentage.textContent = `${formatNumber(results.roiPercentage, 0)}%`;
     elements.annualRoi.textContent = `${formatNumber(results.annualRoi, 1)}%`;
-    
+
     // Update breakdown
     elements.breakdownCapacity.textContent = `${state.systemSize.toFixed(1)} kW`;
     elements.breakdownDaily.textContent = `${formatNumber(results.dailyEnergy, 1)} kWh`;
@@ -291,12 +400,12 @@ function updateResultsDisplay(results) {
     elements.breakdownEfficiency.textContent = `${state.panelEfficiency}%`;
     elements.breakdownRate.textContent = `$${state.energyCost.toFixed(2)}/kWh`;
     elements.breakdownInvestment.textContent = formatCurrency(state.systemCost);
-    
+
     // Show results, hide welcome
     elements.welcomeMessage.style.display = 'none';
     elements.resultsCards.style.display = 'grid';
     elements.detailedBreakdown.style.display = 'block';
-    
+
     // Update status badge
     updateStatusBadge('Results Calculated');
 }
@@ -322,20 +431,20 @@ function resetForm() {
     state.panelEfficiency = 85;
     state.energyCost = 0.12;
     state.systemCost = 15000;
-    
+
     elements.systemSize.value = state.systemSize;
     elements.sunHours.value = state.sunHours;
     elements.panelEfficiency.value = state.panelEfficiency;
     elements.energyCost.value = state.energyCost;
     elements.systemCost.value = state.systemCost;
-    
+
     updateSliderDisplays();
-    
+
     // Hide results, show welcome
     elements.welcomeMessage.style.display = 'block';
     elements.resultsCards.style.display = 'none';
     elements.detailedBreakdown.style.display = 'none';
-    
+
     updateStatusBadge('Ready to Calculate');
 }
 
@@ -351,8 +460,11 @@ function resetForm() {
 function handleSliderChange(event) {
     const id = event.target.id;
     const value = parseFloat(event.target.value);
-    
-    switch(id) {
+
+    // Record slider interaction
+    metrics.recordSliderInteraction(id);
+
+    switch (id) {
         case 'system-size':
             state.systemSize = value;
             break;
@@ -369,7 +481,7 @@ function handleSliderChange(event) {
             state.systemCost = value;
             break;
     }
-    
+
     updateSliderDisplays();
 }
 
@@ -380,13 +492,22 @@ function handleSliderChange(event) {
  */
 function handleFormSubmit(event) {
     event.preventDefault();
-    
+
+    // Measure calculation performance
+    const startTime = performance.now();
+
     // Perform calculations
     state.results = performCalculations();
-    
+
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+
+    // Record metrics
+    metrics.recordCalculation(duration);
+
     // Update display
     updateResultsDisplay(state.results);
-    
+
     // Add animation class
     elements.resultsCards.style.opacity = '0';
     setTimeout(() => {
@@ -401,6 +522,10 @@ function handleFormSubmit(event) {
  */
 function handleResetClick(event) {
     event.preventDefault();
+
+    // Record reset event
+    metrics.recordReset();
+
     resetForm();
 }
 
@@ -418,10 +543,10 @@ function initializeEventListeners() {
     elements.panelEfficiency.addEventListener('input', handleSliderChange);
     elements.energyCost.addEventListener('input', handleSliderChange);
     elements.systemCost.addEventListener('input', handleSliderChange);
-    
+
     // Form submission
     elements.form.addEventListener('submit', handleFormSubmit);
-    
+
     // Reset button
     elements.resetBtn.addEventListener('click', handleResetClick);
 }
@@ -435,16 +560,28 @@ function initializeEventListeners() {
  */
 function init() {
     console.log('Gauss Clean Energy Calculator initialized');
-    
+
     // Set initial slider displays
     updateSliderDisplays();
-    
+
     // Initialize event listeners
     initializeEventListeners();
-    
+
     // Set initial status
     updateStatusBadge('Ready to Calculate');
-    
+
+    // Log session start
+    metrics.logEvent('session_start', {
+        timestamp: new Date().toISOString()
+    });
+
+    // Expose metrics to window for debugging (development only)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        window.gaussMetrics = metrics;
+        console.log('Metrics available at: window.gaussMetrics');
+        console.log('Use window.gaussMetrics.getSummary() to view metrics');
+    }
+
     console.log('Application ready');
 }
 
@@ -454,6 +591,13 @@ if (document.readyState === 'loading') {
 } else {
     init();
 }
+
+// Log metrics summary when user leaves the page
+window.addEventListener('beforeunload', () => {
+    const summary = metrics.getSummary();
+    metrics.logEvent('session_end', summary);
+    console.log('Session Summary:', summary);
+});
 
 // ===================================
 // Export for testing (if needed)

@@ -1,0 +1,33 @@
+# Git-crypt configuration
+# Files matching these patterns will be encrypted in the repository
+
+# Encrypt sensitive configuration files
+*.env filter=git-crypt diff=git-crypt
+.env.* filter=git-crypt diff=git-crypt
+config/secrets.* filter=git-crypt diff=git-crypt
+
+# Encrypt API keys and credentials
+**/secrets/** filter=git-crypt diff=git-crypt
+**/credentials/** filter=git-crypt diff=git-crypt
+*.key filter=git-crypt diff=git-crypt
+*.pem filter=git-crypt diff=git-crypt
+*.p12 filter=git-crypt diff=git-crypt
+
+# Encrypt database dumps (if any)
+*.sql filter=git-crypt diff=git-crypt
+*.dump filter=git-crypt diff=git-crypt
+
+# Encrypt private notes or documentation
+PRIVATE.md filter=git-crypt diff=git-crypt
+**/private/** filter=git-crypt diff=git-crypt
+
+# Do NOT encrypt these files (explicitly)
+*.md !filter !diff
+*.txt !filter !diff
+*.html !filter !diff
+*.css !filter !diff
+*.js !filter !diff
+*.json !filter !diff
+README.md !filter !diff
+LICENSE !filter !diff
+.gitignore !filter !diff
