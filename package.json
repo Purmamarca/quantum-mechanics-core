@@ -1,0 +1,49 @@
+{
+  "name": "quantum-mechanics-core",
+  "version": "2.0.0",
+  "description": "TypeScript-based quantum mechanics simulation and visualization library with strict type safety",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "type-check": "tsc --noEmit",
+    "docs": "typedoc src/index.ts"
+  },
+  "keywords": [
+    "quantum-mechanics",
+    "physics-simulation",
+    "matter-js",
+    "typescript",
+    "quantum-computing",
+    "state-vector",
+    "qubit"
+  ],
+  "author": "todalavibra",
+  "license": "MIT",
+  "dependencies": {
+    "matter-js": "^0.19.0"
+  },
+  "devDependencies": {
+    "@types/matter-js": "^0.19.6",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vitest/ui": "^1.0.0",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "typedoc": "^0.25.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0"
+  }
+}
