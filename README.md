@@ -138,7 +138,3 @@ This project is open source and available under the MIT License.
 ## Contact
 
 For questions, suggestions, or support, please open an issue on GitHub.
-
----
-
-**Disclaimer**: This calculator provides estimates based on average conditions and standard formulas. Actual solar panel performance may vary based on geographic location, weather patterns, shading, panel orientation, system maintenance, and other factors. For precise estimates, consult with a certified solar installer in your area.
