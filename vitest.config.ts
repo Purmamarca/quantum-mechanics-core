@@ -4,7 +4,7 @@ import path from 'path';
 export default defineConfig({
     test: {
         globals: true,
-        environment: 'jsdom',
+        environment: 'node',
         coverage: {
             provider: 'v8',
             reporter: ['text', 'json', 'html', 'lcov'],
@@ -22,7 +22,13 @@ export default defineConfig({
                 statements: 90
             }
         },
-        setupFiles: ['./tests/test-utils/setup.ts']
+        setupFiles: ['./tests/test-utils/setup.ts'],
+        alias: {
+            '@core': path.resolve(__dirname, './src/core'),
+            '@ui': path.resolve(__dirname, './src/ui'),
+            '@config': path.resolve(__dirname, './src/config'),
+            '@utils': path.resolve(__dirname, './src/core/utils')
+        }
     },
     resolve: {
         alias: {

@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import * as Complex from '../../src/core/math/complex.js';
+import * as Complex from '../../../src/core/math/complex';
 
 describe('Complex Number Operations', () => {
     describe('complex()', () => {

@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import * as StateVector from '../../src/core/quantum/state-vector.js';
-import * as Complex from '../../src/core/math/complex.js';
+import * as StateVector from '../../../src/core/quantum/state-vector';
+import * as Complex from '../../../src/core/math/complex';
 
 describe('State Vector Operations', () => {
     describe('createStateVector()', () => {
