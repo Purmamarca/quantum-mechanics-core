@@ -3,7 +3,8 @@
  * @module core/quantum/operators
  */
 
-import type { QuantumOperator, StateVector, StandardGate } from '../types/quantum.types.js';
+import { StandardGate } from '../types/quantum.types.js';
+import type { QuantumOperator, StateVector } from '../types/quantum.types.js';
 import type { ComplexMatrix } from '../types/math.types.js';
 import * as Complex from '../math/complex.js';
 import * as Matrix from '../math/matrix.js';

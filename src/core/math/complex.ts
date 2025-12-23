@@ -107,7 +107,7 @@ export function divide(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
 export function conjugate(z: ComplexNumber): ComplexNumber {
     return {
         real: z.real,
-        imaginary: -z.imaginary
+        imaginary: z.imaginary === 0 ? 0 : -z.imaginary
     };
 }
 
