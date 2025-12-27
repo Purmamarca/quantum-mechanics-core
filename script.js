@@ -131,7 +131,10 @@ const metrics = {
 // ===================================
 // DOM Elements
 // ===================================
-const elements = {
+// Check if we are in a browser environment before accessing document
+const isBrowser = typeof document !== 'undefined';
+
+const elements = isBrowser ? {
     // Input sliders
     systemSize: document.getElementById('system-size'),
     sunHours: document.getElementById('sun-hours'),
@@ -177,7 +180,7 @@ const elements = {
     breakdownEfficiency: document.getElementById('breakdown-efficiency'),
     breakdownRate: document.getElementById('breakdown-rate'),
     breakdownInvestment: document.getElementById('breakdown-investment')
-};
+} : {};
 
 // ===================================
 // Utility Functions
@@ -259,13 +262,14 @@ function calculatePaybackPeriod(systemCost, annualSavings) {
  * @returns {number} Total savings over 25 years
  */
 function calculateLifetimeSavings(annualSavings) {
-    let totalSavings = 0;
     const degradationRate = 0.005; // 0.5% per year
+    const rate = 1 - degradationRate;
+    const years = 25;
 
-    for (let year = 0; year < 25; year++) {
-        const yearSavings = annualSavings * Math.pow(1 - degradationRate, year);
-        totalSavings += yearSavings;
-    }
+    // Geometric series sum: S = a * (1 - r^n) / (1 - r)
+    // where a = first term (annualSavings), r = rate, n = years
+    // Optimization: Replaces O(n) loop with O(1) formula
+    const totalSavings = annualSavings * (1 - Math.pow(rate, years)) / (1 - rate);
 
     return totalSavings;
 }
@@ -586,18 +590,20 @@ function init() {
 }
 
 // Run initialization when DOM is loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
+if (isBrowser) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 
-// Log metrics summary when user leaves the page
-window.addEventListener('beforeunload', () => {
-    const summary = metrics.getSummary();
-    metrics.logEvent('session_end', summary);
-    console.log('Session Summary:', summary);
-});
+    // Log metrics summary when user leaves the page
+    window.addEventListener('beforeunload', () => {
+        const summary = metrics.getSummary();
+        metrics.logEvent('session_end', summary);
+        console.log('Session Summary:', summary);
+    });
+}
 
 // ===================================
 // Export for testing (if needed)
