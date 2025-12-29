@@ -10,6 +10,8 @@ import { EPSILON, areEffectivelyEqual } from '../types/math.types.js';
 /**
  * Creates a zero matrix of given dimensions
  * 
+ * **Complexity:** O(rows × cols)
+ *
  * @param rows - Number of rows
  * @param cols - Number of columns
  * @returns Zero matrix
@@ -26,6 +28,8 @@ export function zeros(rows: number, cols: number): ComplexMatrix {
  * **Mathematical Definition:**
  * I[i][j] = 1 if i === j, else 0
  * 
+ * **Complexity:** O(n²) where n is the dimension
+ *
  * @param dimension - Size of the square matrix
  * @returns Identity matrix
  */
@@ -42,7 +46,7 @@ export function identity(dimension: number): ComplexMatrix {
  * **Mathematical Definition:**
  * (AB)[i][j] = Σₖ A[i][k] · B[k][j]
  * 
- * **Complexity:** O(n³) for n×n matrices
+ * **Complexity:** O(m·k·p) for m×k and k×p matrices (or O(n³) for square matrices)
  * 
  * @param A - First matrix (m×n)
  * @param B - Second matrix (n×p)
@@ -92,6 +96,8 @@ export function multiply(A: ComplexMatrix, B: ComplexMatrix): ComplexMatrix {
  * **Physics Application:**
  * Applying a quantum operator to a state: |ψ'⟩ = U|ψ⟩
  * 
+ * **Complexity:** O(m × n) for m×n matrix
+ *
  * @param matrix - Matrix (m×n)
  * @param vector - Column vector (n×1)
  * @returns Result vector (m×1)
@@ -137,6 +143,8 @@ export function multiplyVector(
  * - Hermitian operators represent observables: A† = A
  * - Unitary operators preserve norm: U†U = I
  * 
+ * **Complexity:** O(rows × cols)
+ *
  * @param matrix - Input matrix
  * @returns Hermitian conjugate
  */
@@ -170,6 +178,8 @@ export function hermitianConjugate(matrix: ComplexMatrix): ComplexMatrix {
  * **Physics Application:**
  * Combining quantum systems: |ψ⟩⊗|φ⟩ represents the composite state
  * 
+ * **Complexity:** O(rowsA × colsA × rowsB × colsB)
+ *
  * @param A - First matrix
  * @param B - Second matrix
  * @returns Tensor product A ⊗ B
@@ -215,6 +225,8 @@ export function tensorProduct(A: ComplexMatrix, B: ComplexMatrix): ComplexMatrix
  * **Physics Application:**
  * Hermitian operators represent physical observables (energy, momentum, etc.)
  * 
+ * **Complexity:** O(n²) for n×n matrix
+ *
  * @param matrix - Matrix to check
  * @param epsilon - Tolerance for comparison
  * @returns true if matrix is Hermitian
@@ -251,6 +263,8 @@ export function isHermitian(matrix: ComplexMatrix, epsilon: number = EPSILON): b
  * Unitary operators represent valid quantum gates and time evolution.
  * They preserve the normalization of quantum states.
  * 
+ * **Complexity:** O(n³) due to matrix multiplication
+ *
  * @param matrix - Matrix to check
  * @param epsilon - Tolerance for comparison
  * @returns true if matrix is unitary
@@ -280,6 +294,8 @@ export function isUnitary(matrix: ComplexMatrix, epsilon: number = EPSILON): boo
  * - Tr(ρ) = 1 for density matrices (normalization)
  * - Tr(ρ²) gives purity of a quantum state
  * 
+ * **Complexity:** O(n) where n is the dimension
+ *
  * @param matrix - Square matrix
  * @returns Trace of the matrix
  * @throws {Error} If matrix is not square
@@ -306,6 +322,8 @@ export function trace(matrix: ComplexMatrix): ComplexNumber {
 /**
  * Checks if two matrices are equal (within tolerance)
  * 
+ * **Complexity:** O(rows × cols)
+ *
  * @param A - First matrix
  * @param B - Second matrix
  * @param epsilon - Tolerance for comparison
@@ -341,6 +359,8 @@ export function matricesEqual(
 /**
  * Scales a matrix by a complex scalar
  * 
+ * **Complexity:** O(rows × cols)
+ *
  * @param scalar - Complex scalar
  * @param matrix - Matrix to scale
  * @returns Scaled matrix
@@ -354,6 +374,8 @@ export function scaleMatrix(scalar: ComplexNumber, matrix: ComplexMatrix): Compl
 /**
  * Adds two matrices
  * 
+ * **Complexity:** O(rows × cols)
+ *
  * @param A - First matrix
  * @param B - Second matrix
  * @returns Sum A + B
