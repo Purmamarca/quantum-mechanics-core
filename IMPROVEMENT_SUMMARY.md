@@ -89,7 +89,7 @@ All 11 tests PASSED ✅
 <meta name="keywords" content="solar calculator, solar ROI, ...">
 <meta name="author" content="Gauss Clean Energy">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://todalavibra.github.io/Gauss-Clean-Energy/">
+<link rel="canonical" href="https://roanco.github.io/Gauss-Clean-Energy/">
 
 <!-- Open Graph (Facebook) -->
 <meta property="og:type" content="website">
@@ -162,7 +162,7 @@ Major improvements including:
 
 ### Branch Status
 - **Branch**: `fix-nested-label`
-- **Remote**: `origin` (https://github.com/todalavibra/Gauss-Clean-Energy)
+- **Remote**: `origin` (https://github.com/roanco/Gauss-Clean-Energy)
 - **Status**: ✅ Pushed successfully
 
 ### Files Modified/Added
@@ -255,4 +255,4 @@ The project is now production-ready with monitoring, security, and optimization 
 **Generated**: 2025-12-15  
 **Author**: Antigravity AI  
 **Project**: Gauss Clean Energy  
-**Repository**: https://github.com/todalavibra/Gauss-Clean-Energy
+**Repository**: https://github.com/roanco/Gauss-Clean-Energy

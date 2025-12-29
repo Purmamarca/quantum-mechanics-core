@@ -110,7 +110,7 @@ docs: Add comprehensive improvement summary
 #### GitHub Status
 - [x] All changes committed
 - [x] Pushed to remote: `origin/fix-nested-label`
-- [x] Repository: https://github.com/todalavibra/Gauss-Clean-Energy
+- [x] Repository: https://github.com/roanco/Gauss-Clean-Energy
 - [x] All files synced successfully
 
 #### Files Added/Modified
@@ -202,7 +202,7 @@ The Gauss Clean Energy calculator now features:
 - Successfully deployed to GitHub
 
 ### Repository
-**URL**: https://github.com/todalavibra/Gauss-Clean-Energy  
+**URL**: https://github.com/roanco/Gauss-Clean-Energy
 **Branch**: fix-nested-label  
 **Status**: ✅ All changes pushed  
 **Commits**: 2 new commits with comprehensive improvements
