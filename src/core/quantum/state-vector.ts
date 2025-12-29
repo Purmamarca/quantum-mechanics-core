@@ -11,6 +11,8 @@ import { EPSILON } from '../types/math.types.js';
 /**
  * Creates a quantum state vector
  * 
+ * **Complexity:** O(N) where N is the dimension (if checkNormalization is true)
+ *
  * @param amplitudes - Complex amplitudes for each basis state
  * @param checkNormalization - Whether to verify normalization (default: true)
  * @returns State vector
@@ -47,6 +49,8 @@ export function createStateVector(
  * **Physics Explanation:**
  * A quantum state must satisfy Σᵢ |αᵢ|² = 1 (total probability = 1)
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param amplitudes - State amplitudes
  * @param epsilon - Tolerance (default: EPSILON)
  * @returns true if normalized
@@ -62,6 +66,8 @@ export function isStateNormalized(
 /**
  * Computes the total probability (sum of |αᵢ|²)
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param amplitudes - State amplitudes
  * @returns Total probability
  */
@@ -82,6 +88,8 @@ export function getTotalProbability(amplitudes: ReadonlyArray<ComplexNumber>): n
  * **Mathematical Definition:**
  * |ψ_normalized⟩ = |ψ⟩ / √⟨ψ|ψ⟩
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param state - Unnormalized state vector
  * @returns Normalized state vector
  * @throws {Error} If state is a zero vector
@@ -116,6 +124,8 @@ export function normalize(state: StateVector): StateVector {
  * - Orthogonality: ⟨φ|ψ⟩ = 0
  * - Normalization: ⟨ψ|ψ⟩ = 1
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param bra - Left state vector ⟨φ|
  * @param ket - Right state vector |ψ⟩
  * @returns Inner product
@@ -150,6 +160,8 @@ export function innerProduct(bra: StateVector, ket: StateVector): ComplexNumber 
  * **Physics Explanation (Born Rule):**
  * P(measuring state i) = |αᵢ|²
  * 
+ * **Complexity:** O(1)
+ *
  * @param state - Quantum state
  * @param basisIndex - Index of the basis state
  * @returns Probability (0 to 1)
@@ -175,6 +187,8 @@ export function getProbability(state: StateVector, basisIndex: number): number {
  * Measurement causes wave function collapse. The state |ψ⟩ = Σᵢ αᵢ|i⟩
  * collapses to |i⟩ with probability |αᵢ|².
  * 
+ * **Complexity:** O(N) to determine outcome + O(N) to create collapsed state
+ *
  * @param state - State to measure
  * @param random - Random number generator (default: Math.random)
  * @returns Measurement result with collapsed state
@@ -225,6 +239,8 @@ export function measure(
 /**
  * Creates the computational basis {|0⟩, |1⟩, ..., |n-1⟩}
  * 
+ * **Complexity:** O(N²) where N is the dimension (creates N vectors of size N)
+ *
  * @param dimension - Dimension of the Hilbert space
  * @returns Array of basis vectors
  */
@@ -245,6 +261,8 @@ export function createComputationalBasis(dimension: number): ReadonlyArray<State
  * exists in multiple states simultaneously:
  * |ψ⟩ = Σᵢ cᵢ|ψᵢ⟩
  * 
+ * **Complexity:** O(K × N) where K is number of states and N is dimension
+ *
  * @param states - Array of state vectors
  * @param coefficients - Complex coefficients for each state
  * @param autoNormalize - Whether to normalize the result (default: true)
@@ -305,6 +323,8 @@ export function createSuperposition(
  * **Physics Application:**
  * Orthogonal states are distinguishable by measurement.
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param state1 - First state
  * @param state2 - Second state
  * @param epsilon - Tolerance
@@ -330,6 +350,8 @@ export function areOrthogonal(
  * F = 1: identical states
  * F = 0: orthogonal states
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param state1 - First state
  * @param state2 - Second state
  * @returns Fidelity (0 to 1)
@@ -342,6 +364,8 @@ export function fidelity(state1: StateVector, state2: StateVector): number {
 /**
  * Checks if two states are equal (within tolerance)
  * 
+ * **Complexity:** O(N) where N is the dimension
+ *
  * @param state1 - First state
  * @param state2 - Second state
  * @param epsilon - Tolerance
