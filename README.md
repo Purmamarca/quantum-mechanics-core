@@ -49,7 +49,7 @@ This is a legitimate clean energy estimation tool built with modern web technolo
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/todalavibra/Gauss-Clean-Energy.git
+   git clone https://github.com/roanco/Gauss-Clean-Energy.git
    cd Gauss-Clean-Energy
    ```
 

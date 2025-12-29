@@ -146,7 +146,7 @@ The file will appear as binary/encrypted on GitHub but readable locally.
 
 ### Unlock repository on another machine
 ```bash
-git clone https://github.com/todalavibra/Gauss-Clean-Energy.git
+git clone https://github.com/roanco/Gauss-Clean-Energy.git
 cd Gauss-Clean-Energy
 git-crypt unlock /path/to/gauss-clean-energy.key
 ```

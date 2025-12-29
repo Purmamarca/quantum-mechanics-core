@@ -20,7 +20,7 @@ security: Enhanced encryption setup and gitignore
 ### Push Status
 - ✅ **Successfully pushed** to GitHub
 - **Branch**: `fix-nested-label`
-- **Remote**: `origin` (https://github.com/todalavibra/Gauss-Clean-Energy)
+- **Remote**: `origin` (https://github.com/roanco/Gauss-Clean-Energy)
 - **Status**: Up to date
 
 ---
@@ -237,7 +237,7 @@ All security documentation is available:
 
 ## 🔗 **Repository Links**
 
-- **GitHub**: https://github.com/todalavibra/Gauss-Clean-Energy
+- **GitHub**: https://github.com/roanco/Gauss-Clean-Energy
 - **Branch**: fix-nested-label
 - **Latest Commit**: c44802a
 
