@@ -77,10 +77,9 @@ export function multiply(A: ComplexMatrix, B: ComplexMatrix): ComplexMatrix {
                     sum = Complex.add(sum, Complex.multiply(aElement, bElement));
                 }
             }
-            // Create new row array to maintain immutability
-            const newRow = [...result[i]!];
-            newRow[j] = sum;
-            (result as ComplexNumber[][])[i] = newRow;
+            // Optimization: Mutate the result matrix directly during construction
+            // instead of creating a new row array for every element.
+            (result as ComplexNumber[][])[i]![j] = sum;
         }
     }
 
