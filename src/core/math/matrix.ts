@@ -77,10 +77,8 @@ export function multiply(A: ComplexMatrix, B: ComplexMatrix): ComplexMatrix {
                     sum = Complex.add(sum, Complex.multiply(aElement, bElement));
                 }
             }
-            // Create new row array to maintain immutability
-            const newRow = [...result[i]!];
-            newRow[j] = sum;
-            (result as ComplexNumber[][])[i] = newRow;
+            // Mutate result in place as it is locally constructed
+            (result as ComplexNumber[][])[i]![j] = sum;
         }
     }
 
@@ -158,9 +156,7 @@ export function hermitianConjugate(matrix: ComplexMatrix): ComplexMatrix {
         for (let j = 0; j < cols; j++) {
             const element = matrix[i]?.[j];
             if (element) {
-                const newRow = [...result[j]!];
-                newRow[i] = Complex.conjugate(element);
-                (result as ComplexNumber[][])[j] = newRow;
+                (result as ComplexNumber[][])[j]![i] = Complex.conjugate(element);
             }
         }
     }
@@ -208,9 +204,7 @@ export function tensorProduct(A: ComplexMatrix, B: ComplexMatrix): ComplexMatrix
                     const rowIndex = i * rowsB + k;
                     const colIndex = j * colsB + l;
 
-                    const newRow = [...result[rowIndex]!];
-                    newRow[colIndex] = Complex.multiply(aElement, bElement);
-                    (result as ComplexNumber[][])[rowIndex] = newRow;
+                    (result as ComplexNumber[][])[rowIndex]![colIndex] = Complex.multiply(aElement, bElement);
                 }
             }
         }
