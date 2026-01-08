@@ -73,7 +73,6 @@ def test_critical_controls_exist(index_soup):
         "panel-efficiency",
         "energy-cost",
         "system-cost",
-        "calculate-btn",
         "reset-btn"
     ]
     for element_id in ids_to_check:

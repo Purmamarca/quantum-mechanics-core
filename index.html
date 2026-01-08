@@ -149,10 +149,6 @@
 
                     <!-- Calculate Button -->
                     <div class="action-buttons">
-                        <button type="submit" id="calculate-btn" class="btn btn-primary">
-                            <span class="btn-icon">🔆</span>
-                            Calculate Savings
-                        </button>
                         <button type="button" id="reset-btn" class="btn btn-secondary">
                             <span class="btn-icon">🔄</span>
                             Reset
@@ -199,7 +195,7 @@
                     </div>
 
                     <!-- Results Cards (shown after calculation) -->
-                    <div id="results-cards" class="results-cards" style="display: none;">
+                    <div id="results-cards" class="results-cards hidden">
                         <!-- Energy Production Card -->
                         <div class="result-card card-primary">
                             <div class="card-icon">⚡</div>
@@ -280,7 +276,7 @@
                     </div>
 
                     <!-- Detailed Breakdown -->
-                    <div id="detailed-breakdown" class="detailed-breakdown" style="display: none;">
+                    <div id="detailed-breakdown" class="detailed-breakdown hidden">
                         <h3>Detailed Breakdown</h3>
                         <div class="breakdown-grid">
                             <div class="breakdown-item">
@@ -316,6 +312,8 @@
         <!-- Footer -->
         <footer class="footer">
             <p>&copy; 2024 Gauss Clean Energy. Professional solar energy estimation tool.</p>
+            <p class="disclaimer">Disclaimer: All calculations are estimates and for informational purposes only. Consult
+                with a professional for accurate figures.</p>
         </footer>
     </div>
 

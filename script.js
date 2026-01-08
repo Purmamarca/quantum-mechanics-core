@@ -8,6 +8,21 @@
  */
 
 // ===================================
+// Constants
+// ===================================
+const CONSTANTS = {
+    DAYS_PER_YEAR: 365,
+    MONTHS_PER_YEAR: 12,
+    SYSTEM_LIFESPAN_YEARS: 25,
+    PANEL_DEGRADATION_RATE: 0.005, // 0.5% per year
+    LBS_CO2_PER_KWH: 0.92, // EPA estimate
+    LBS_PER_METRIC_TON: 2204.62,
+    LBS_CO2_ABSORBED_PER_TREE_PER_YEAR: 48,
+    ANIMATION_OPACITY_TIMEOUT: 50,
+    DEBOUNCE_DELAY_MS: 250
+};
+
+// ===================================
 // Application State
 // ===================================
 const state = {
@@ -213,6 +228,26 @@ function formatNumber(value, decimals = 0) {
     }).format(value);
 }
 
+/**
+ * Creates a debounced function that delays invoking func until after wait milliseconds
+ * have elapsed since the last time the debounced function was invoked.
+ *
+ * @param {Function} func The function to debounce.
+ * @param {number} wait The number of milliseconds to delay.
+ * @returns {Function} Returns the new debounced function.
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // ===================================
 // Calculation Functions
 // ===================================
@@ -228,7 +263,7 @@ function formatNumber(value, decimals = 0) {
  */
 function calculateAnnualEnergy(systemSize, sunHours, efficiency) {
     const efficiencyFactor = efficiency / 100;
-    return systemSize * sunHours * 365 * efficiencyFactor;
+    return systemSize * sunHours * CONSTANTS.DAYS_PER_YEAR * efficiencyFactor;
 }
 
 /**
@@ -250,7 +285,7 @@ function calculateAnnualSavings(annualEnergy, energyCost) {
  * @returns {number} Payback period in years
  */
 function calculatePaybackPeriod(systemCost, annualSavings) {
-    if (annualSavings === 0) return 0;
+    if (annualSavings <= 0) return null;
     return systemCost / annualSavings;
 }
 
@@ -262,14 +297,12 @@ function calculatePaybackPeriod(systemCost, annualSavings) {
  * @returns {number} Total savings over 25 years
  */
 function calculateLifetimeSavings(annualSavings) {
-    const degradationRate = 0.005; // 0.5% per year
-    const rate = 1 - degradationRate;
-    const years = 25;
+    const rate = 1 - CONSTANTS.PANEL_DEGRADATION_RATE;
 
     // Geometric series sum: S = a * (1 - r^n) / (1 - r)
     // where a = first term (annualSavings), r = rate, n = years
     // Optimization: Replaces O(n) loop with O(1) formula
-    const totalSavings = annualSavings * (1 - Math.pow(rate, years)) / (1 - rate);
+    const totalSavings = annualSavings * (1 - Math.pow(rate, CONSTANTS.SYSTEM_LIFESPAN_YEARS)) / (1 - rate);
 
     return totalSavings;
 }
@@ -282,9 +315,8 @@ function calculateLifetimeSavings(annualSavings) {
  * @returns {number} CO2 reduction in tons per year
  */
 function calculateCO2Reduction(annualEnergy) {
-    const lbsPerKwh = 0.92;
-    const lbsPerYear = annualEnergy * lbsPerKwh;
-    return lbsPerYear / 2204.62; // Convert lbs to metric tons
+    const lbsPerYear = annualEnergy * CONSTANTS.LBS_CO2_PER_KWH;
+    return lbsPerYear / CONSTANTS.LBS_PER_METRIC_TON;
 }
 
 /**
@@ -295,9 +327,8 @@ function calculateCO2Reduction(annualEnergy) {
  * @returns {number} Equivalent number of trees
  */
 function calculateTreesEquivalent(co2Tons) {
-    const lbsPerTree = 48;
-    const co2Lbs = co2Tons * 2204.62;
-    return Math.round(co2Lbs / lbsPerTree);
+    const co2Lbs = co2Tons * CONSTANTS.LBS_PER_METRIC_TON;
+    return Math.round(co2Lbs / CONSTANTS.LBS_CO2_ABSORBED_PER_TREE_PER_YEAR);
 }
 
 /**
@@ -308,7 +339,7 @@ function calculateTreesEquivalent(co2Tons) {
  * @returns {number} ROI percentage
  */
 function calculateROI(lifetimeSavings, systemCost) {
-    if (systemCost === 0) return 0;
+    if (systemCost <= 0) return null;
     return ((lifetimeSavings - systemCost) / systemCost) * 100;
 }
 
@@ -325,11 +356,11 @@ function performCalculations() {
         state.panelEfficiency
     );
 
-    const dailyEnergy = annualEnergy / 365;
-    const monthlyEnergy = annualEnergy / 12;
+    const dailyEnergy = annualEnergy / CONSTANTS.DAYS_PER_YEAR;
+    const monthlyEnergy = annualEnergy / CONSTANTS.MONTHS_PER_YEAR;
 
     const annualSavings = calculateAnnualSavings(annualEnergy, state.energyCost);
-    const monthlySavings = annualSavings / 12;
+    const monthlySavings = annualSavings / CONSTANTS.MONTHS_PER_YEAR;
 
     const paybackPeriod = calculatePaybackPeriod(state.systemCost, annualSavings);
 
@@ -340,7 +371,7 @@ function performCalculations() {
     const treesPlanted = calculateTreesEquivalent(co2Reduction);
 
     const roiPercentage = calculateROI(lifetimeSavings, state.systemCost);
-    const annualRoi = roiPercentage / 25;
+    const annualRoi = roiPercentage === null ? null : roiPercentage / CONSTANTS.SYSTEM_LIFESPAN_YEARS;
 
     return {
         annualEnergy,
@@ -386,7 +417,7 @@ function updateResultsDisplay(results) {
     elements.annualSavings.textContent = formatCurrency(results.annualSavings);
     elements.monthlySavings.textContent = formatCurrency(results.monthlySavings);
 
-    elements.paybackPeriod.textContent = results.paybackPeriod.toFixed(1);
+    elements.paybackPeriod.textContent = results.paybackPeriod === null ? 'N/A' : results.paybackPeriod.toFixed(1);
 
     elements.lifetimeSavings.textContent = formatCurrency(results.lifetimeSavings);
     elements.netProfit.textContent = formatCurrency(results.netProfit);
@@ -394,8 +425,8 @@ function updateResultsDisplay(results) {
     elements.co2Reduction.textContent = formatNumber(results.co2Reduction, 2);
     elements.treesPlanted.textContent = formatNumber(results.treesPlanted, 0);
 
-    elements.roiPercentage.textContent = `${formatNumber(results.roiPercentage, 0)}%`;
-    elements.annualRoi.textContent = `${formatNumber(results.annualRoi, 1)}%`;
+    elements.roiPercentage.textContent = results.roiPercentage === null ? 'N/A' : `${formatNumber(results.roiPercentage, 0)}%`;
+    elements.annualRoi.textContent = results.annualRoi === null ? 'N/A' : `${formatNumber(results.annualRoi, 1)}%`;
 
     // Update breakdown
     elements.breakdownCapacity.textContent = `${state.systemSize.toFixed(1)} kW`;
@@ -406,9 +437,10 @@ function updateResultsDisplay(results) {
     elements.breakdownInvestment.textContent = formatCurrency(state.systemCost);
 
     // Show results, hide welcome
-    elements.welcomeMessage.style.display = 'none';
-    elements.resultsCards.style.display = 'grid';
-    elements.detailedBreakdown.style.display = 'block';
+    elements.welcomeMessage.classList.add('hidden');
+    elements.resultsCards.classList.remove('hidden');
+    elements.detailedBreakdown.classList.remove('hidden');
+
 
     // Update status badge
     updateStatusBadge('Results Calculated');
@@ -445,9 +477,9 @@ function resetForm() {
     updateSliderDisplays();
 
     // Hide results, show welcome
-    elements.welcomeMessage.style.display = 'block';
-    elements.resultsCards.style.display = 'none';
-    elements.detailedBreakdown.style.display = 'none';
+    elements.welcomeMessage.classList.remove('hidden');
+    elements.resultsCards.classList.add('hidden');
+    elements.detailedBreakdown.classList.add('hidden');
 
     updateStatusBadge('Ready to Calculate');
 }
@@ -487,6 +519,7 @@ function handleSliderChange(event) {
     }
 
     updateSliderDisplays();
+    debouncedCalculate(new Event('submit'));
 }
 
 /**
@@ -516,7 +549,7 @@ function handleFormSubmit(event) {
     elements.resultsCards.style.opacity = '0';
     setTimeout(() => {
         elements.resultsCards.style.opacity = '1';
-    }, 50);
+    }, CONSTANTS.ANIMATION_OPACITY_TIMEOUT);
 }
 
 /**
@@ -565,6 +598,9 @@ function initializeEventListeners() {
 function init() {
     console.log('Gauss Clean Energy Calculator initialized');
 
+    // Create a debounced version of the calculation handler
+    debouncedCalculate = debounce(handleFormSubmit, CONSTANTS.DEBOUNCE_DELAY_MS);
+
     // Set initial slider displays
     updateSliderDisplays();
 
@@ -573,6 +609,9 @@ function init() {
 
     // Set initial status
     updateStatusBadge('Ready to Calculate');
+
+    // Perform initial calculation on load
+    handleFormSubmit(new Event('submit'));
 
     // Log session start
     metrics.logEvent('session_start', {
