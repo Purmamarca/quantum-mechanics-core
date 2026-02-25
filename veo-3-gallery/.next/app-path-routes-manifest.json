@@ -1,0 +1,10 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/veo/download/route": "/api/veo/download",
+  "/api/veo/generate/route": "/api/veo/generate",
+  "/api/veo/operation/route": "/api/veo/operation",
+  "/create/page": "/create",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}
