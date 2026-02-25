@@ -1,22 +1,10 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-
-# Environment Variables (NEVER COMMIT THESE!)
+# Environment variables
 .env
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .env.*.local
-.env.production
-.env.development
-.env.test
 
 # Secrets & Credentials (NEVER COMMIT THESE!)
 secrets/
@@ -29,6 +17,57 @@ credentials/
 *.crt
 config/secrets.*
 PRIVATE.md
+git-crypt-key
+
+# Build outputs
+dist/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Dependencies
+node_modules/
+jspm_packages/
+typings/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env/
+.Python
+*.egg
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
 
 # Database
 *.sql
@@ -36,38 +75,10 @@ PRIVATE.md
 *.sqlite
 *.db
 
-# Logs
-*.log
-logs/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS Files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Node modules (if using Node.js in future)
-node_modules/
-
-# Git-crypt key files (NEVER COMMIT THESE!)
-*.key
-git-crypt-key
-
-# Backup files
+# Project specific
+video_results_full.txt
+video_url.txt
+quantum_gravity_veo.mp4
 *.bak
 *.backup
 *.tmp
-
-# Test coverage
-.coverage
-htmlcov/
-.pytest_cache/
